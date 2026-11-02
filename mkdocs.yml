@@ -1,0 +1,41 @@
+site_name: 开源软件实验二：GitHub Actions 和 GitHub Pages
+site_description: 《开源软件》实验二配套文档站点 —— GitHub Actions 工作流与 GitHub Pages 自动化部署
+site_url: https://acmthezyh.github.io/opensource-experiment-2/
+repo_url: https://github.com/ACMThezyh/opensource-experiment-2
+repo_name: ACMThezyh/opensource-experiment-2
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    - scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
+  features:
+    - navigation.tabs
+    - navigation.top
+    - content.code.copy
+
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - 首页: index.md
+  - 实验 2-1：GitHub Actions: experiment/github-actions.md
+  - 实验 2-2：GitHub Pages: experiment/github-pages.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - attr_list
+  - md_in_html
+  - tables
