@@ -43,7 +43,7 @@ jobs:
         run: |
           cat > test_hello.py <<'EOF'
           def test_add():
-              assert 1 + 2 == 3
+              assert 1 + 2 == 4
 
           def test_greeting():
               assert "Hello, GitHub Actions!" == "Hello, GitHub Actions!"
