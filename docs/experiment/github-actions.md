@@ -86,7 +86,9 @@ git push origin main
 
 推送完成后，仓库的 **Actions** 页签即出现该工作流的运行记录。
 
-<!-- 2-1-01: Actions 工作流列表 -->
+![Actions 页签中的工作流运行列表](../assets/screenshots/2-1-01-actions-workflow-list.png)
+
+*图 2-1-1：推送后 Actions 页签出现 6 条运行记录，成功为绿色 ✅、失败为红色 ✗，证明工作流已被正确识别并触发。*
 
 ## 步骤三：观察执行过程
 
@@ -97,7 +99,9 @@ git push origin main
 - `test` Job 依赖 `build` 完成，页面上的依赖图（DAG）清晰展示了 `build → test` 的先后关系；
 - `pytest -v` 输出了两个测试的 `PASSED` 结果。
 
-<!-- 2-1-02: hello-action 运行成功 -->
+![hello-action 运行成功概览](../assets/screenshots/2-1-02-hello-run-success.png)
+
+*图 2-1-2：`build` 与 `test` 两个 Job 均成功，依赖图中 `build → test` 的箭头直观展示了 `needs` 关系，总耗时 21 秒。*
 
 ### 故意制造失败，观察错误日志
 
@@ -110,11 +114,25 @@ def test_add():
 
 推送后工作流以红色 ✗ 结束，日志中可见 `FAILED` 与 `AssertionError` 的详细堆栈，证明 GitHub Actions 能如实反馈测试失败。
 
-<!-- 2-1-03: 故意失败的红色 ✗ 与 FAILED 日志 -->
+![故意破坏断言后的失败状态](../assets/screenshots/2-1-03-hello-test-failed.png)
+
+*图 2-1-3：`编写并运行单元测试` 步骤显示红色 ✗，整个 `测试 Job` 失败，证明工作流能如实捕获测试失败。*
+
+失败日志中的关键输出（通过 `gh run view --log-failed` 获取）：
+
+```text
+test_hello.py::test_add FAILED                                           [ 50%]
+>       assert 1 + 2 == 4
+E       assert (1 + 2) == 4
+test_hello.py:2: AssertionError
+FAILED test_hello.py::test_add - assert (1 + 2) == 4
+```
 
 随后还原断言并以 `fix:` 提交推送，工作流恢复绿色 ✅。
 
-<!-- 2-1-04: 修复后恢复绿色 -->
+![修复断言后恢复绿色](../assets/screenshots/2-1-04-hello-test-fixed.png)
+
+*图 2-1-4：提交 `fix: 修复被故意破坏的测试断言` 后，两个 Job 重新恢复绿色 ✅，验证了修复流程的闭环。*
 
 ## 步骤四：验证执行结果
 

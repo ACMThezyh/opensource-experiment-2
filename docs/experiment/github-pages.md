@@ -33,7 +33,9 @@ mkdocs serve     # 本地预览 http://127.0.0.1:8000
 mkdocs build --strict   # 严格模式构建，警告即错误
 ```
 
-<!-- 2-2-04: 本地 mkdocs serve 预览 -->
+![本地 mkdocs serve 预览效果](../assets/screenshots/2-2-04-local-serve.png)
+
+*图 2-2-1：`mkdocs serve` 本地预览页面，导航、中英文搜索、代码高亮均正常，证明站点骨架无死链。*
 
 ## 步骤二：创建部署工作流
 
@@ -92,19 +94,30 @@ jobs:
 
 在仓库 **Settings → Pages** 中将 **Source** 设置为 **GitHub Actions**（也可用 `gh api` 完成：`gh api --method POST repos/{owner}/{repo}/pages -f build_type=workflow`）。若 Source 保持默认的"Deploy from a branch"，部署后站点仍会显示 404。
 
-<!-- 2-2-01: Pages 设置 Source 为 GitHub Actions -->
+本实验通过命令行完成同样的配置，返回结果中的 `"build_type":"workflow"` 即表示 Source 已设为 **GitHub Actions**：
+
+```bash
+$ gh api --method POST repos/ACMThezyh/opensource-experiment-2/pages -f build_type=workflow
+{"url":"https://api.github.com/repos/ACMThezyh/opensource-experiment-2/pages",
+ "html_url":"https://acmthezyh.github.io/opensource-experiment-2/",
+ "build_type":"workflow", "public":true, "https_enforced":true}
+```
 
 ## 步骤四：推送触发自动部署
 
 推送 `main` 分支后，Actions 中 `Deploy MkDocs to GitHub Pages` 工作流自动运行，`build` 与 `deploy` 两个 Job 依次执行成功：
 
-<!-- 2-2-02: deploy 工作流 build+deploy 两 Job 成功 -->
+![Deploy 工作流 build 与 deploy 两个 Job 成功](../assets/screenshots/2-2-02-deploy-success.png)
+
+*图 2-2-2：`Deploy MkDocs to GitHub Pages` 运行成功，依赖图中 `build → deploy`，deploy 节点上直接显示已发布的站点地址。*
 
 ## 步骤五：访问验证站点
 
 打开 `https://acmthezyh.github.io/opensource-experiment-2/`，文档站点已上线，可正常浏览首页与两篇实验记录：
 
-<!-- 2-2-03: 浏览器访问线上文档站点 -->
+![浏览器访问 GitHub Pages 上的文档站点](../assets/screenshots/2-2-03-pages-site.png)
+
+*图 2-2-3：浏览器访问 `https://acmthezyh.github.io/opensource-experiment-2/` 成功，站点右上角显示 GitHub 仓库卡片，证明由该仓库自动部署上线。*
 
 ## 问题与解决
 
