@@ -1,0 +1,18 @@
+# 构建产物，禁止提交
+site/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Claude Code 本地会话
+.claude/
+
+# 系统文件
+.DS_Store
+
+# 课程原始素材（含个人信息或与仓库无关，不上传公开仓库）
+实验03-Github Action和GitHub Pages使用.pdf
+实验报告模板.doc
+开源软件实验一报告-*.docx
