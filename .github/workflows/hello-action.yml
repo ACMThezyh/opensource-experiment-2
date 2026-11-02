@@ -1,0 +1,51 @@
+name: Hello GitHub Actions
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: 构建 Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 查看仓库文件
+        run: ls -la
+
+      - name: 输出问候
+        run: echo "Hello, GitHub Actions!"
+
+  test:
+    name: 测试 Job
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Python 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 打印 Python 版本
+        run: python --version
+
+      - name: 安装 pytest
+        run: pip install pytest
+
+      - name: 编写并运行单元测试
+        run: |
+          cat > test_hello.py <<'EOF'
+          def test_add():
+              assert 1 + 2 == 3
+
+          def test_greeting():
+              assert "Hello, GitHub Actions!" == "Hello, GitHub Actions!"
+          EOF
+          pytest -v
